@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import io.flutter.embedding.android.FlutterActivity
-import io.flutter.embedding.android.FlutterFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val flutterFragment: FlutterFragment by lazy {
-        supportFragmentManager.findFragmentByTag(FlutterFragmentTag) as? FlutterFragment ?: run {
+    private val flutterFragment: MainFlutterFragment by lazy {
+        supportFragmentManager.findFragmentByTag(FlutterFragmentTag) as? MainFlutterFragment ?: run {
             initFlutterBridging()
         }
     }
@@ -31,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
         fab2.setOnClickListener { view ->
             startFlutterFragment()
+
+            val todo = Todo("Android Todo", "Received from Android")
+            flutterFragment.channel.navigate("/details", todo)
         }
     }
 
@@ -82,13 +84,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFlutterBridging(): FlutterFragment {
-        return FlutterFragment
-            .withCachedEngine(FlutterBridging.CachedEngineFragmentId)
-            .build<FlutterFragment>()
-            .also {
-                addFlutterFragmentBridging(it as Fragment)
-            }
+    private fun initFlutterBridging(): MainFlutterFragment {
+        return MainFlutterFragment().also {
+            addFlutterFragmentBridging(it as Fragment)
+        }
     }
 
     private fun addFlutterFragmentBridging(fragment: Fragment) {
