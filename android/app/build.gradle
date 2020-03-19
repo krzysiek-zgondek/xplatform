@@ -2,19 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-buildscript {
-    repositories {
-        logger.info("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
-        maven {
-            url uri("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
-        }
-        maven {
-            url 'https://storage.googleapis.com/download.flutter.io'
-        }
-
-    }
-}
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
