@@ -2,6 +2,19 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+buildscript {
+    repositories {
+        logger.info("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+        maven {
+            url uri("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+        }
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
+
+    }
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -20,6 +33,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        profile {
+            initWith debug
         }
     }
 
@@ -49,4 +66,8 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    debugImplementation 'com.xplatform.fluttermodule:flutter_debug:1.0'
+    profileImplementation 'com.xplatform.fluttermodule:flutter_profile:1.0'
+    releaseImplementation 'com.xplatform.fluttermodule:flutter_release:1.0'
 }

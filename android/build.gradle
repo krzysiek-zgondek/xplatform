@@ -5,7 +5,14 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+        logger.info("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+        maven {
+            url uri("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+        }
+        maven {
+            url 'https://storage.googleapis.com/download.flutter.io'
+        }
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.0'
@@ -20,7 +27,15 @@ allprojects {
     repositories {
         google()
         jcenter()
-        
+        repositories {
+            logger.info("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+            maven {
+                url uri("${rootProject.projectDir}/../flutter/fluttermodule/build/host/outputs/repo")
+            }
+            maven {
+                url 'https://storage.googleapis.com/download.flutter.io'
+            }
+        }
     }
 }
 
