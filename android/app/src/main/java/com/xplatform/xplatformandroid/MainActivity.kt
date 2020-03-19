@@ -5,19 +5,30 @@ import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import io.flutter.embedding.android.FlutterFragment
 
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        initFlutterBridging()
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+    }
+
+    private fun initFlutterBridging() {
+        supportFragmentManager.apply {
+            var flutterFragment: FlutterFragment =
+                findFragmentByTag(FlutterFragmentTag) as FlutterFragment ?: run {
+                    FlutterFragment.createDefault()
+                }
         }
     }
 
@@ -35,5 +46,9 @@ class MainActivity : AppCompatActivity() {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    companion object{
+        const val FlutterFragmentTag = "flutter.fragment.tag"
     }
 }
