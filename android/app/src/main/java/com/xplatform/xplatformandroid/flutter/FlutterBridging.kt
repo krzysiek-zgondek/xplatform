@@ -1,4 +1,4 @@
-package com.xplatform.xplatformandroid
+package com.xplatform.xplatformandroid.flutter
 
 /**
  * @project Xplatform Android

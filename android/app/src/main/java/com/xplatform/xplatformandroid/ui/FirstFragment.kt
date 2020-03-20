@@ -1,4 +1,4 @@
-package com.xplatform.xplatformandroid
+package com.xplatform.xplatformandroid.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.xplatform.xplatformandroid.R
+import com.xplatform.xplatformandroid.R.layout
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -18,7 +20,7 @@ class FirstFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first, container, false)
+        return inflater.inflate(layout.fragment_first, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

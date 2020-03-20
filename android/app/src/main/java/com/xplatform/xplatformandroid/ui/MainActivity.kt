@@ -1,20 +1,27 @@
-package com.xplatform.xplatformandroid
+package com.xplatform.xplatformandroid.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.navigation.Navigation.findNavController
+import com.xplatform.xplatformandroid.R
+import com.xplatform.xplatformandroid.flutter.FlutterBridging
+import com.xplatform.xplatformandroid.flutter.MainFlutterFragment
+import com.xplatform.xplatformandroid.dto.Todo
 import io.flutter.embedding.android.FlutterActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 class MainActivity : AppCompatActivity() {
     private val flutterFragment: MainFlutterFragment by lazy {
-        supportFragmentManager.findFragmentByTag(FlutterFragmentTag) as? MainFlutterFragment ?: run {
-            initFlutterBridging()
-        }
+        supportFragmentManager.findFragmentByTag(FlutterFragmentTag) as? MainFlutterFragment
+            ?: run {
+                initFlutterBridging()
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,10 +37,16 @@ class MainActivity : AppCompatActivity() {
 
         fab2.setOnClickListener { view ->
             startFlutterFragment()
-
-            val todo = Todo("Android Todo", "Received from Android")
-            flutterFragment.channel.navigate("/details", todo)
+            callFlutterMethod()
         }
+    }
+
+    private fun callFlutterMethod() {
+        val todo = Todo(
+            "Android Todo",
+            "Received from Android"
+        )
+        flutterFragment.channel.navigate("/details", todo)
     }
 
     override fun onPostResume() {
@@ -72,18 +85,6 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
     private fun initFlutterBridging(): MainFlutterFragment {
         return MainFlutterFragment().also {
             addFlutterFragmentBridging(it as Fragment)
@@ -102,6 +103,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startFlutterFragment() {
+        nav_host_fragment.isVisible = false
+        flutterFragmentBridgeContainer.isVisible = true
+
         supportFragmentManager.commit {
             addToBackStack("show")
             show(flutterFragment as Fragment)
@@ -113,6 +117,21 @@ class MainActivity : AppCompatActivity() {
             .withCachedEngine(FlutterBridging.CachedEngineActivityId)
             .build(this)
         startActivity(intent)
+    }
+
+    fun showNativeTodoFragment(todo: Todo) {
+        flutterFragmentBridgeContainer.isVisible = false
+        nav_host_fragment.isVisible = true
+
+        val bundle = bundleOf(
+            "title" to todo.title,
+            "description" to todo.description
+        )
+
+        findNavController(
+            this,
+            R.id.nav_host_fragment
+        ).navigate(R.id.action_FirstFragment_to_SecondFragment, bundle)
     }
 
     companion object {

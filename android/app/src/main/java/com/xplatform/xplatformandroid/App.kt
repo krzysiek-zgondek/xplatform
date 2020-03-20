@@ -1,6 +1,7 @@
 package com.xplatform.xplatformandroid
 
 import android.app.Application
+import com.xplatform.xplatformandroid.flutter.FlutterBridging
 import createCachedFlutterEngine
 
 class App : Application() {

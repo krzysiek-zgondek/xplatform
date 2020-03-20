@@ -1,5 +1,4 @@
 import android.app.Application
-import com.xplatform.xplatformandroid.ChannelMain
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor.DartEntrypoint
