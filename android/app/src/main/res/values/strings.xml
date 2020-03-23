@@ -13,4 +13,5 @@
     <string name="flutteractivity">FlutterActivity</string>
     <string name="flutterfragmentactivity">FlutterFragmentActivity</string>
     <string name="callFlutter">Flutter</string>
+    <string name="xplatformKotlin">XplatformKotlin</string>
 </resources>

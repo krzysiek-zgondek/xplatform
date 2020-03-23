@@ -23,5 +23,11 @@ class MainActivity : AppCompatActivity() {
                 Intent(this, FlutterFragmentActivityExample::class.java)
             )
         }
+
+        startXplatformKotlin.setOnClickListener { view ->
+            startActivity(
+                Intent(this, XKotlinActivity::class.java)
+            )
+        }
     }
 }

@@ -30,6 +30,11 @@
             />
 
         <activity
+            android:name=".ui.XKotlinActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
             android:name=".flutter.MainFlutterActivity"
             android:theme="@style/AppTheme.NoActionBar"
             />
