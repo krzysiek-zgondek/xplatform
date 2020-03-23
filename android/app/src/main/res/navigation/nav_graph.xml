@@ -17,6 +17,22 @@
             android:id="@+id/action_FirstFragment_to_SecondFragment"
             app:destination="@id/SecondFragment"
             />
+
+        <action
+            android:id="@+id/action_FirstFragment_to_FlutterFragment"
+            app:destination="@id/MainFlutterFragment"
+            >
+            <argument
+                android:name="title"
+                android:defaultValue="no title"
+                app:argType="string"
+                />
+            <argument
+                android:name="description"
+                android:defaultValue="no desc"
+                app:argType="string"
+                />
+        </action>
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -38,5 +54,38 @@
             android:id="@+id/action_SecondFragment_to_FirstFragment"
             app:destination="@id/FirstFragment"
             />
+    </fragment>
+
+    <fragment
+        android:id="@+id/MainFlutterFragment"
+        android:name="com.xplatform.xplatformandroid.flutter.MainFlutterFragment"
+        android:label="@string/flutter_fragment_label"
+        >
+        <argument
+            android:name="title"
+            android:defaultValue="no title"
+            app:argType="string"
+            />
+        <argument
+            android:name="description"
+            android:defaultValue="no desc"
+            app:argType="string"
+            />
+
+        <action
+            android:id="@+id/action_FlutterFragment_to_SecondFragment"
+            app:destination="@id/SecondFragment"
+            >
+            <argument
+                android:name="title"
+                android:defaultValue="no title"
+                app:argType="string"
+                />
+            <argument
+                android:name="description"
+                android:defaultValue="no desc"
+                app:argType="string"
+                />
+        </action>
     </fragment>
 </navigation>

@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.navigation.fragment.findNavController
 import com.xplatform.xplatformandroid.R
 import com.xplatform.xplatformandroid.R.layout
+import com.xplatform.xplatformandroid.dto.Todo
 
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
@@ -28,6 +30,15 @@ class FirstFragment : Fragment() {
 
         view.findViewById<Button>(R.id.button_first).setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+        }
+
+        view.findViewById<Button>(R.id.button_flutter).setOnClickListener {
+            val bundle = bundleOf(
+                "title" to "Android title",
+                "description" to "Android description"
+            )
+
+            findNavController().navigate(R.id.action_FirstFragment_to_FlutterFragment, bundle)
         }
     }
 }

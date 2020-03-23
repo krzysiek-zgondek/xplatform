@@ -25,7 +25,17 @@
         </activity>
 
         <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
+            android:name=".ui.FlutterFragmentActivityExample"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".flutter.MainFlutterActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".ui.FlutterActivityExample"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:theme="@style/AppTheme"

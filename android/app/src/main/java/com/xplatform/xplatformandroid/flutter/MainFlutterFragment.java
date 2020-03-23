@@ -1,10 +1,14 @@
 package com.xplatform.xplatformandroid.flutter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.FragmentKt;
+
+import com.xplatform.xplatformandroid.R;
 import com.xplatform.xplatformandroid.dto.Todo;
-import com.xplatform.xplatformandroid.ui.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -15,11 +19,17 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import kotlin.Unit;
 
-import static com.xplatform.xplatformandroid.flutter.ChannelMain.Companion.*;
+import static com.xplatform.xplatformandroid.flutter.ChannelMain.Companion.Flutter;
 import static com.xplatform.xplatformandroid.flutter.ChannelMain.registerChannel;
 
 public class MainFlutterFragment extends FlutterFragment {
     public ChannelMain channel;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        callFlutterMethod();
+    }
 
     @Override
     public FlutterEngine provideFlutterEngine(@NotNull Context context) {
@@ -38,13 +48,24 @@ public class MainFlutterFragment extends FlutterFragment {
         }
     }
 
+    private void callFlutterMethod() {
+        Todo todo = new Todo(
+                "Android Todo",
+                "Received from Android"
+        );
+
+        channel.navigate("/details", todo);
+    }
+
     /* This is unsafe as it can be called outside lifecycle but just for this example i will omit
      * all the lifecycle logic
      * */
     private Unit mainChannelReceiver(MethodCall methodCall, MethodChannel.Result result) {
         switch (methodCall.method) {
             case Flutter.resultMethod:
-                executeNativeTodo(methodCall.arguments.toString());
+                executeNativeTodo(
+                        Todo.fromJson(methodCall.arguments.toString())
+                );
                 break;
 
             default:
@@ -56,10 +77,12 @@ public class MainFlutterFragment extends FlutterFragment {
     }
 
     /*You should never call host like this, but for the sake of simplicity lets accept that*/
-    private void executeNativeTodo(String json) {
-        if (getActivity() instanceof MainActivity) {
-            MainActivity activity = (MainActivity) getActivity();
-            activity.showNativeTodoFragment(Todo.fromJson(json));
-        }
+    private void executeNativeTodo(Todo todo) {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", todo.getTitle());
+        bundle.putString("description", todo.getDescription());
+
+        Fragment fragment = (Fragment) ((Object) this);
+        FragmentKt.findNavController(fragment).navigate(R.id.action_FlutterFragment_to_SecondFragment, bundle);
     }
 }
